@@ -9,10 +9,6 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        // Limpar o repositório antes do teste
-        Repositorio repositorio = Fachada.getRepositorio();
-        repositorio.getCorrentistas().clear(); // Limpa qualquer dado existente
-
         // Dados para o teste
         String cpf = "12345678900";
         String nome = "João da Silva";
