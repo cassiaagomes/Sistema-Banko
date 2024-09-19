@@ -63,6 +63,10 @@ import modelo.ContaEspecial;
 		return null;
 	}
 
+	public ArrayList<ContaEspecial> getContasEspeciais() {
+		return contasEspeciais;
+	}
+
 	public int gerarIdConta() {
 		return getContas().size()+1;
 	}
