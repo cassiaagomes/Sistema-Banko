@@ -58,7 +58,7 @@ public class Conta {
 	        } else {
 	            System.out.println("Pobre.");
 	        }
-    }
+    	}
 
     	public void transferir(double valor, Conta destino) throws Exception {
 	        if (valor > 0 && saldo >= valor) {
@@ -67,6 +67,6 @@ public class Conta {
 	        } else {
 	            System.out.println("Saldo Baixo.");
 	        }
-	    }
+	}
 
 }
