@@ -1,18 +1,19 @@
 package repositorio;
 
+import java.io.File;
+import java.io.FileWriter;
 //Imports do pack MODELO
 import java.util.ArrayList;
-import modelo.Correntista;
+
 import modelo.Conta;
 import modelo.ContaEspecial;
+import modelo.Correntista;
 
 
 //Class Repositorio -Responsavel por ler e gravar os objetos
 	public class Repositorio {
 		private ArrayList<Correntista> correntistas = new ArrayList<>();
 		private ArrayList<Conta> contas = new ArrayList<> ();
-		private ArrayList<ContaEspecial> contasEspeciais = new ArrayList<>();
-		
 		
 	//Metodos para realizar o armazenamento das informações
 		
@@ -25,10 +26,6 @@ import modelo.ContaEspecial;
 		contas.add(x);
 	}
 	
-	public void adicionarContaEspecial(ContaEspecial contaEspecial) {
-		contasEspeciais.add(contaEspecial);
-	}
-	
 	//Getters
 	
 	public ArrayList<Correntista> getCorrentistas() {
@@ -37,12 +34,6 @@ import modelo.ContaEspecial;
 	
 	public ArrayList<Conta> getContas(){
 		return contas;
-	}
-
-	//
-	
-	public ArrayList<ContaEspecial> contasEspeciais(){
-		return contasEspeciais;
 	}
 
 	public Correntista localizarCorrentista(String cpf) {
@@ -67,7 +58,47 @@ import modelo.ContaEspecial;
 		return getContas().size()+1;
 	}
 
-	public void salvarObjetos() {
+	// feito, por hora
+	public void	salvarObjetos()  {
+		try	{
+			File f = new File( new File(".\\contas.csv").getCanonicalPath())  ;
+			FileWriter arquivo1 = new FileWriter(f); 
+			for(Conta c : contas) 	{	
+				if (c instanceof ContaEspecial e) {
+					arquivo1.write("CONTA ESPECIAL;"+e.getId()+";"+e.getData()+";"+e.getSaldo()+";"+e.getLimite()+"\n");
+				}
+				else {
+					arquivo1.write("CONTA SIMPLES;"+c.getId()+";"+c.getData()+";"+c.getSaldo()+"\n");
+				}	
+			} 
+			arquivo1.close();
+		}
+		catch(Exception e){
+			throw new RuntimeException("problema na cria��o do arquivo contas "+e.getMessage());
+		}
+		
+		
+		try	{
+			File f = new File( new File(".\\correntistas.csv").getCanonicalPath())  ;
+			FileWriter arquivo2 = new FileWriter(f) ; 
+			ArrayList<String> lista ;
+			String listaId;
+			for(Correntista c : correntistas) {
+				lista = new ArrayList<>();
+				for(Conta x : c.getContas()) {
+					lista.add(x.getId()+"");
+				}
+				listaId = String.join(",", lista);
+
+				arquivo2.write(c.getCpf() +";"+ c.getNome()+";" 
+						+c.getSenha()+";"+ listaId +"\n");	
+
+			} 
+			arquivo2.close();
+		}
+		catch (Exception e) {
+			throw new RuntimeException("problema na cria��o do arquivo  correntista "+e.getMessage());
+		}
 		
 	}
 
