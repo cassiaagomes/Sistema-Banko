@@ -18,32 +18,17 @@ public class Correntista {
 		return cpf;
 	}
 
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
-
 	public String getNome() {
 		return nome;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
 
 	public String getSenha() {
 		return senha;
 	}
 
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
-
 	public ArrayList<Conta> getContas() {
 		return contas;
-	}
-
-	public void setContas(ArrayList<Conta> contas) {
-		this.contas = contas;
 	}
 	
 	public double getSaldoTotal() {
