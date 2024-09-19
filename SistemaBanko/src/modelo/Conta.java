@@ -47,27 +47,26 @@ public class Conta {
 	}
 	
 	public void creditar(double valor) {
-        if (valor > 0) {
-            saldo += valor;
-        }
+	        if (valor > 0) {
+	            saldo += valor;
+	        }
+    	}
+
+    	public void debitar(double valor) throws Exception {
+	        if (valor > 0 && saldo >= valor) {
+	            saldo -= valor;
+	        } else {
+	            System.out.println("Pobre.");
+	        }
     }
 
-    public void debitar(double valor) throws Exception {
-        if (valor > 0 && saldo >= valor) {
-            saldo -= valor;
-        } else {
-            System.out.println("Pobre.");
-        }
-    }
-
-    public void transferir(double valor, Conta destino) throws Exception {
-        if (valor > 0 && saldo >= valor) {
-            this.debitar(valor);
-            destino.creditar(valor);
-        } else {
-            System.out.println("Saldo Baixo.");
-        }
-    }
-	
+    	public void transferir(double valor, Conta destino) throws Exception {
+	        if (valor > 0 && saldo >= valor) {
+	            this.debitar(valor);
+	            destino.creditar(valor);
+	        } else {
+	            System.out.println("Saldo Baixo.");
+	        }
+	    }
 
 }
