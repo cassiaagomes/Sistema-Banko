@@ -69,4 +69,10 @@ public class Conta {
 	        }
 	}
 
+	public void adicionar(Correntista c) {
+		if (c != null && !correntista.contains(c)) {
+	        correntista.add(c);
+	    }
+	}
+
 }
