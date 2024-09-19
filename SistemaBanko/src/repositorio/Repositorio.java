@@ -38,11 +38,38 @@ import modelo.ContaEspecial;
 	public ArrayList<Conta> getContas(){
 		return contas;
 	}
+
+	//
 	
 	public ArrayList<ContaEspecial> contasEspeciais(){
 		return contasEspeciais;
 	}
 
+	public Correntista localizarCorrentista(String cpf) {
+		for (Correntista c : correntistas) {
+			if (c.getCpf().equals(cpf)) {
+				return c;
+			}
+		}
+		return null;
+	}
 	
+	public Conta localizarConta (int id) {
+		for (Conta c : contas) {
+			if(c.getId()==id) {
+				return c;
+			}
+		}
+		return null;
+	}
+
+	public int gerarIdConta() {
+		return getContas().size()+1;
+	}
+
+	public void salvarObjetos() {
+		
+	}
+
 
 }
