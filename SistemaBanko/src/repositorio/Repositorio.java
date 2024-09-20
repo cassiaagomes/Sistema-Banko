@@ -59,6 +59,10 @@ import modelo.Correntista;
 		return null;
 	}
 
+	public ArrayList<ContaEspecial> getContasEspeciais() {
+		return contasEspeciais;
+	}
+
 	public int gerarIdConta() {
 		if(contas.isEmpty())
 			return 1;
