@@ -26,10 +26,6 @@ public class Conta {
 		return data;
 	}
 
-	public void setData(String data) {
-		this.data = data;
-	}
-
 	public double getSaldo() {
 		return saldo;
 	}
@@ -42,9 +38,6 @@ public class Conta {
 		return correntista;
 	}
 
-	public void setCorrentista(ArrayList<Correntista> correntista) {
-		this.correntista = correntista;
-	}
 	
 	public void creditar(double valor) {
 	        if (valor > 0) {
