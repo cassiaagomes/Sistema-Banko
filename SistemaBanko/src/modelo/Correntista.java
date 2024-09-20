@@ -2,7 +2,7 @@ package modelo;
 
 import java.util.ArrayList;
 
-public class Correntista {
+public class Correntista implements Comparable<Correntista> {
 	protected String cpf;
 	protected String nome;
 	protected String senha;
@@ -43,6 +43,11 @@ public class Correntista {
 		if (conta != null && !contas.contains(conta)) {
 	        contas.add(conta);	
 		}
+	}
+
+	@Override
+	public int compareTo(Correntista outro) {
+		return this.cpf.compareTo(outro.getCpf());
 	}
 	
 

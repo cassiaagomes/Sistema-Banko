@@ -39,11 +39,10 @@ public class Conta {
 	}
 
 	
-	public void creditar(double valor) {
-	        if (valor > 0) {
-	            saldo += valor;
-	        }
-    	}
+		public void creditar(double valor) {
+			saldo += valor;
+		}
+		            	        
 
     	public void debitar(double valor) throws Exception {
 	        if (valor > 0 && saldo >= valor) {

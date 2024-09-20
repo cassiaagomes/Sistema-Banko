@@ -5,6 +5,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 //Imports do pack MODELO
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
 import modelo.Conta;
@@ -16,28 +18,27 @@ import modelo.Correntista;
 
 //Class Repositorio -Responsavel por ler e gravar os objetos
 	public class Repositorio {
-		private ArrayList<Correntista> correntistas = new ArrayList<>();
-		private ArrayList<Conta> contas = new ArrayList<> ();
+		private List<Correntista> correntistas = new ArrayList<>();
+		private List<Conta> contas = new ArrayList<> ();
 		
 	//Metodos para realizar o armazenamento das informações
 		
-	//Add
+
 	public void adicionarCorrentista(Correntista correntista) {
 		correntistas.add(correntista);
-	}
-		
-	//organizar por cpf!!!!!!!!!!!
-	public void adicionarConta(Conta conta) {
-		
+		Collections.sort(correntistas);
+	}	
+
+	public void adicionarConta(Conta conta) {	
 		contas.add(conta);
 	}
 	
 	
-	public ArrayList<Correntista> getCorrentistas() {
+	public List<Correntista> getCorrentistas() {
 		return correntistas;
 	}
 	
-	public ArrayList<Conta> getContas(){
+	public List<Conta> getContas(){
 		return contas;
 	}
 
@@ -59,9 +60,6 @@ import modelo.Correntista;
 		return null;
 	}
 
-	public ArrayList<ContaEspecial> getContasEspeciais() {
-		return contasEspeciais;
-	}
 
 	public int gerarIdConta() {
 		if(contas.isEmpty())

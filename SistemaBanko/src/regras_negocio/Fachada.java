@@ -1,5 +1,7 @@
 package regras_negocio;
 
+import java.util.List;
+
 import modelo.Conta;
 import modelo.ContaEspecial;
 import modelo.Correntista;
@@ -7,7 +9,38 @@ import repositorio.Repositorio;
 
 public class Fachada {
 	private Fachada () {} 
-	private static Repositorio repositorio = new Repositorio (); 
+	private static Repositorio repositorio = new Repositorio ();
+	
+	public static List<Correntista> listarCorrentistas(){
+		return repositorio.getCorrentistas();	
+	}
+	
+	public static List<Conta> listarContas(){
+		return repositorio.getContas();	
+	}
+	
+	public static void creditarValor(int id, String cpf, String senha, double valor) {
+		try {
+			Correntista correntista = repositorio.localizarCorrentista(cpf);
+			if(correntista == null) {
+				throw new Exception("Correntista inexistente.");
+			}
+			Conta conta = repositorio.localizarConta(id);
+			if(conta == null) {
+				throw new Exception("Conta inexistente.");
+			}
+			if(valor <= 0) {
+				throw new Exception("Valor inválido.");
+			}
+			if(!correntista.getSenha().equals(senha)) {
+				throw new Exception("Senha incorreta.");
+			}
+			else
+				conta.creditar(valor);		
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+		}
+	}
 	
 	public static void criarCorrentista(String cpf, String nome, String senha) throws Exception {
 		cpf = cpf.trim();
