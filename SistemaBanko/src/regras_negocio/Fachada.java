@@ -21,7 +21,7 @@ public class Fachada {
 
 	
 	public static void criarCorrentista(String cpf, String nome, String senha) throws Exception {
-		cpf = cpf.trim();
+	    cpf = cpf.trim();
 	    nome = nome.trim();
 	    senha = senha.trim();
 	    
