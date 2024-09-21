@@ -37,7 +37,7 @@ public class Correntista implements Comparable<Correntista> {
             saldoTotal += conta.getSaldo();
         }
         return saldoTotal;
-    	}
+    }
 
 	public void adicionar(Conta conta) {
 		if (conta != null && !contas.contains(conta)) {

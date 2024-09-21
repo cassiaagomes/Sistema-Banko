@@ -9,11 +9,7 @@ public class ContaEspecial extends Conta{
 		this.limite = limite;
 	}
 	
-	public double getLimite() {
-		return limite;
-	}
-	
-	@Override
+		@Override
 	public void debitar (double valor) throws Exception{
 		if (this.getSaldo() + this.getLimite() >= valor) {
 			this.setSaldo(this.getSaldo() - valor);
@@ -22,6 +18,8 @@ public class ContaEspecial extends Conta{
 		}
 	}
 
-	
+	public double getLimite() {
+		return limite;
+	}
 
 }

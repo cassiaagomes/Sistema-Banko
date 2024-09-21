@@ -2,18 +2,13 @@ package repositorio;
 
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
-//Imports do pack MODELO
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
-
 import modelo.Conta;
 import modelo.ContaEspecial;
 import modelo.Correntista;
-
-
 
 
 //Class Repositorio -Responsavel por ler e gravar os objetos
@@ -60,6 +55,15 @@ import modelo.Correntista;
 		return null;
 	}
 
+	public void removerConta(int id) throws Exception {
+		Conta conta = localizarConta(id);
+		
+		if (conta == null) {
+			throw new Exception("Conta não encontrada com o ID: " + id);
+		}
+		contas.remove(conta);
+	}
+
 
 	public int gerarIdConta() {
 		if(contas.isEmpty())
@@ -68,24 +72,28 @@ import modelo.Correntista;
 		return this.getContas().size()+1;
 	}
 	
-	public void carregarObjetos() {
+	public void carregarObjetos()  	{
+		// carregar para o repositorio os objetos salvos nos arquivos csv
 		try {
-			File file1 = new File(new File(".\\contas.csv").getCanonicalPath());
-			File file2 = new File(new File(".\\correntistas.csv").getCanonicalPath());
-			if (!file1.exists() || !file2.exists() ) {
-				FileWriter arquivo1 = new FileWriter(file1); arquivo1.close();
-				FileWriter arquivo2 = new FileWriter(file2); arquivo2.close();
+			//caso os arquivos nao existam, serao criados vazios
+			File f1 = new File( new File(".\\contas.csv").getCanonicalPath() ) ; 
+			File f2 = new File( new File(".\\correntistas.csv").getCanonicalPath() ) ; 
+			if (!f1.exists() || !f2.exists()) {
+				//System.out.println("criando arquivo .csv vazio");
+				FileWriter arquivo1 = new FileWriter(f1); arquivo1.close();
+				FileWriter arquivo2 = new FileWriter(f2); arquivo2.close();
 				return;
 			}
-		} catch (IOException ex) {
+		}
+		catch(Exception ex)		{
 			throw new RuntimeException("criacao dos arquivos vazios:"+ex.getMessage());
 		}
-		
+
 		String linha;	
 		String[] partes;	
 		Conta co;
 		Correntista c;
-		
+
 		try	{
 			String tipo, id, data, saldo, limite ;
 			File f = new File( new File(".\\contas.csv").getCanonicalPath() )  ;
@@ -115,7 +123,7 @@ import modelo.Correntista;
 		catch(Exception ex)		{
 			throw new RuntimeException("Erro na leitura arquivo de contas:"+ex.getMessage());
 		}
-		//prestar atenção na assinatura dos metodos
+		
 		try	{
 			String cpf,nome, senha, ids;
 			File f = new File( new File(".\\correntistas.csv").getCanonicalPath())  ;
@@ -126,17 +134,20 @@ import modelo.Correntista;
 				cpf = partes[0];
 				nome = partes[1];
 				senha = partes[2];
-				ids="";
-				c = new Correntista(cpf,nome,senha);
+				ids = "";
+				c = new Correntista(cpf, nome, senha);
 				this.adicionarCorrentista(c);
-				ids = partes[4];
 
-				if(!ids.isEmpty()) {	
-					for(String idconta : ids.split(",")){	
-						co = this.localizarConta(Integer.parseInt(idconta));
-						co.adicionar(c);
-						c.adicionar(co);
-					}
+				if (partes.length > 4) {
+				    ids = partes[4];
+				    
+				    if (!ids.isEmpty()) {
+				        for (String idconta : ids.split(",")) {
+				            co = this.localizarConta(Integer.parseInt(idconta));
+				            co.adicionar(c);
+				            c.adicionar(co);
+				        }
+				    }
 				}
 			}
 			arquivo2.close();
@@ -146,15 +157,12 @@ import modelo.Correntista;
 		}
 	}
 
-	
-	
-	
-	
-	// feito, por hora, irei ordenar dentro da lista os correntistas.
 	public void	salvarObjetos()  {
+		//gravar nos arquivos csv os objetos que estão no repositório
 		try	{
 			File f = new File( new File(".\\contas.csv").getCanonicalPath())  ;
-			FileWriter arquivo1 = new FileWriter(f); 
+			FileWriter arquivo1 = new FileWriter(f);
+			
 			for(Conta c : contas) 	{	
 				if (c instanceof ContaEspecial e) {
 					arquivo1.write("CONTA_ESPECIAL;"+e.getId()+";"+e.getData()+";"+e.getSaldo()+";"+e.getLimite()+"\n");
@@ -164,12 +172,12 @@ import modelo.Correntista;
 				}	
 			} 
 			arquivo1.close();
+		
 		}
 		catch(Exception e){
-			throw new RuntimeException("problema na cria��o do arquivo contas "+e.getMessage());
+			throw new RuntimeException("Problema na criação do arquivo "+e.getMessage());
 		}
-		
-		
+
 		try	{
 			File f = new File( new File(".\\correntistas.csv").getCanonicalPath())  ;
 			FileWriter arquivo2 = new FileWriter(f) ; 
@@ -191,6 +199,8 @@ import modelo.Correntista;
 		catch (Exception e) {
 			throw new RuntimeException("problema na cria��o do arquivo  correntista "+e.getMessage());
 		}
+		
+		
 		
 	}
 
