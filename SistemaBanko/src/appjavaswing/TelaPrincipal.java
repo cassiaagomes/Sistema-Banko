@@ -67,6 +67,7 @@ public class TelaPrincipal {
 		frame.getContentPane().add(label_1);
 		
 		button = new JButton("CAIXA");
+		button.setFont(new Font("Tahoma", Font.BOLD, 10));
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TelaCaixa tc = new TelaCaixa();			
@@ -76,6 +77,7 @@ public class TelaPrincipal {
 		frame.getContentPane().add(button);
 		
 		button_1 = new JButton("CONTA");
+		button_1.setFont(new Font("Tahoma", Font.BOLD, 10));
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TelaConta tconta = new TelaConta();
