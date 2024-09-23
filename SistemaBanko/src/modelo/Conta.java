@@ -67,12 +67,18 @@ public class Conta {
 		
 
     	public void transferir(double valor, Conta destino) throws Exception {
-	        if (valor > 0 && saldo >= valor) {
+	        if ( saldo >= valor) {
 	            this.debitar(valor);
 	            destino.creditar(valor);
-	        } else {
-	            System.out.println("Saldo Baixo.");
-	        }
+	        } else
+	        	if (this instanceof ContaEspecial){
+	        		ContaEspecial especial = (ContaEspecial) this;
+	        		double limiteDisponivel = saldo + especial.getLimite();
+					if (valor > limiteDisponivel) {
+						throw new Exception("Saldo insuficiente, excedendo o limite disponível.");
+					} else { this.debitar(valor);
+		            destino.creditar(valor);}					
+	        }else  throw new Exception("Saldo Baixo.");       
 	}
 
 	public void adicionar(Correntista c) {

@@ -158,6 +158,21 @@ public class Main {
                         System.out.println("Saindo do sistema...");
                         continuar = false;
                         break;
+                    case 12:
+                        System.out.println("Digite o id da sua conta");
+                        int id1 = scanner.nextInt();
+                        scanner.nextLine();
+                        System.out.println("Digite seu cpf");
+                        String cpf1 = scanner.nextLine();
+                        System.out.println("Digite sua senha");
+                        String senha1 = scanner.nextLine();
+                        System.out.println("informe o valor");
+                        double valor = scanner.nextDouble();
+                        scanner.nextLine();
+                        System.out.println("informe a conta de destino");
+                        int id2 = scanner.nextInt();
+                        Fachada.transferirValor(id1, cpf1, senha1, valor, id2);
+                        break;
 
                     default:
                         System.out.println("Opção inválida! Tente novamente.");
