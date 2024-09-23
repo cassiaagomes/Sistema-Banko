@@ -1,7 +1,10 @@
 package regras_negocio;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+
 import modelo.Conta;
 import modelo.ContaEspecial;
 import modelo.Correntista;
@@ -63,8 +66,11 @@ public class Fachada {
 		if (c.getContas().isEmpty()) {
 
 			int idConta = repositorio.gerarIdConta();
-			String dataAtual = java.time.LocalDateTime.now().toString();
-			Conta novaConta = new Conta(idConta, dataAtual, 0.0);
+			
+			DateTimeFormatter f1 = DateTimeFormatter.ofPattern("dd/MM/yy");
+			LocalDate dataatual = LocalDate.now();
+			String data = dataatual.format(f1);
+			Conta novaConta = new Conta(idConta, data, 0.0);
 			c.getContas().add(novaConta);
 			novaConta.adicionar(c);
 
@@ -79,8 +85,10 @@ public class Fachada {
 				}
 			}
 			int idConta = repositorio.gerarIdConta();
-			String dataAtual = java.time.LocalDateTime.now().toString();
-			Conta novaConta = new Conta(idConta, dataAtual, 0.0);
+			DateTimeFormatter f1 = DateTimeFormatter.ofPattern("dd/MM/yy");
+			LocalDate dataatual = LocalDate.now();
+			String data = dataatual.format(f1);
+			Conta novaConta = new Conta(idConta, data, 0.0);
 			c.getContas().add(novaConta);
 			repositorio.adicionarConta(novaConta);
 			repositorio.salvarObjetos();
@@ -97,12 +105,13 @@ public class Fachada {
 		if (c == null) {
 			throw new Exception("O Correntista de cpf: " + cpf + "não foi encontrado");
 		}
-
 		int idConta = repositorio.gerarIdConta();
 
-		String dataAtual = java.time.LocalDateTime.now().toString();
+		DateTimeFormatter f1 = DateTimeFormatter.ofPattern("dd/MM/yy");
+		LocalDate dataatual = LocalDate.now();
+		String data = dataatual.format(f1);
 
-		ContaEspecial contaEspecial = new ContaEspecial(idConta, dataAtual, 0.0, limite);
+		ContaEspecial contaEspecial = new ContaEspecial(idConta, data, 0.0, limite);
 
 		c.getContas().add(contaEspecial);
 		repositorio.adicionarConta(contaEspecial);

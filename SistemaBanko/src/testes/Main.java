@@ -74,7 +74,7 @@ public class Main {
                     case 5:
                         System.out.println("\n== Listar Contas ==");
                         Fachada.listarContas().forEach(c -> {
-                            System.out.println("ID: " + c.getId() + ", Saldo: " + c.getSaldo());
+                            System.out.println("ID: " + c.getId() +" Data: "+ c.getData()+", Saldo: " + c.getSaldo());
                         });
                         break;
 
