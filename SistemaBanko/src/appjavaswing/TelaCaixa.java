@@ -1,206 +1,115 @@
 package appjavaswing;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import regras_negocio.Fachada;
-import repositorio.Repositorio;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import java.awt.Color;
+import java.awt.Font;
+import javax.swing.JTextField;
+import javax.swing.JButton;
 
 public class TelaCaixa {
 
-    private JFrame frame;
-    private JLabel label;
-    private JTextField textFieldCpf;
-    private JTextField textFieldSenha;
-    private JTextField textFieldValor;
-    private JTextField textFieldContaDestino;
-    private JTextField textFieldIdConta;
-    private JButton buttonCreditar;
-    private JButton buttonDebitar;
-    private JButton buttonTransferir;
-    private JButton buttonOk;
-    private JLabel labelMensagem;
-    private Repositorio repositorio;
+	private JFrame frame;
+	private JLabel label;
+	private JLabel label_1;
+	private JTextField textField;
+	private JLabel label_2;
+	private JTextField textField_1;
+	private JButton button;
+	private JButton button_1;
+	private JButton button_2;
+	private JLabel label_3;
+	private JButton button_3;
 
-    public TelaCaixa() {
-        this.repositorio = new Repositorio(); 
-        this.repositorio.carregarObjetos();
-        initialize();
-        frame.setVisible(true);
-    }
+	/**
+	 * Launch the application.
+	 
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					TelaCaixa window = new TelaCaixa();
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
-    public void initialize() {
-        frame = new JFrame();
-        frame.setBounds(100, 100, 500, 400);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().setLayout(null);
+	
+	 * Create the application.
+	 */
+	public TelaCaixa() {
+		initialize();
+		frame.setVisible(true);
+	}
 
-        label = new JLabel("BANKO");
-        label.setForeground(new Color(153, 50, 204));
-        label.setFont(new Font("Verdana", Font.BOLD | Font.ITALIC, 13));
-        label.setBounds(52, 10, 85, 20);
-        frame.getContentPane().add(label);
-
-        JLabel labelCpf = new JLabel("Digite Seu CPF");
-        labelCpf.setFont(new Font("Tahoma", Font.BOLD, 12));
-        labelCpf.setBounds(30, 72, 96, 13);
-        frame.getContentPane().add(labelCpf);
-
-        textFieldCpf = new JTextField();
-        textFieldCpf.setBounds(30, 95, 120, 19);
-        frame.getContentPane().add(textFieldCpf);
-
-        JLabel labelSenha = new JLabel("Digite Sua Senha");
-        labelSenha.setFont(new Font("Tahoma", Font.BOLD, 12));
-        labelSenha.setBounds(30, 128, 120, 13);
-        frame.getContentPane().add(labelSenha);
-
-        textFieldSenha = new JTextField();
-        textFieldSenha.setBounds(30, 151, 120, 19);
-        frame.getContentPane().add(textFieldSenha);
-
-        buttonOk = new JButton("OK");
-        buttonOk.setFont(new Font("Tahoma", Font.BOLD, 13));
-        buttonOk.setBounds(170, 150, 75, 21);
-        frame.getContentPane().add(buttonOk);
-
-        buttonCreditar = new JButton("CREDITAR");
-        buttonCreditar.setEnabled(false);
-        buttonCreditar.setFont(new Font("Tahoma", Font.BOLD, 10));
-        buttonCreditar.setBounds(320, 80, 100, 21);
-        frame.getContentPane().add(buttonCreditar);
-
-        buttonDebitar = new JButton("DEBITAR");
-        buttonDebitar.setEnabled(false);
-        buttonDebitar.setFont(new Font("Tahoma", Font.BOLD, 10));
-        buttonDebitar.setBounds(320, 120, 100, 21);
-        frame.getContentPane().add(buttonDebitar);
-
-        buttonTransferir = new JButton("TRANSFERIR");
-        buttonTransferir.setEnabled(false);
-        buttonTransferir.setFont(new Font("Tahoma", Font.BOLD, 10));
-        buttonTransferir.setBounds(320, 160, 100, 21);
-        frame.getContentPane().add(buttonTransferir);
-
-        JLabel labelValor = new JLabel("Valor:");
-        labelValor.setBounds(30, 200, 50, 20);
-        frame.getContentPane().add(labelValor);
-
-        textFieldValor = new JTextField();
-        textFieldValor.setBounds(80, 200, 120, 20);
-        frame.getContentPane().add(textFieldValor);
-
-        JLabel labelContaDestino = new JLabel("Conta Destino:");
-        labelContaDestino.setBounds(30, 230, 100, 20);
-        frame.getContentPane().add(labelContaDestino);
-
-        textFieldContaDestino = new JTextField();
-        textFieldContaDestino.setBounds(130, 230, 120, 20);
-        frame.getContentPane().add(textFieldContaDestino);
-
-        JLabel labelIdConta = new JLabel("ID da Conta:");
-        labelIdConta.setBounds(30, 260, 100, 20);
-        frame.getContentPane().add(labelIdConta);
-
-        textFieldIdConta = new JTextField();
-        textFieldIdConta.setBounds(130, 260, 120, 20);
-        frame.getContentPane().add(textFieldIdConta);
-
-        // Label para mostrar a mensagem das operações
-        labelMensagem = new JLabel("");
-        labelMensagem.setFont(new Font("Tahoma", Font.BOLD, 12));
-        labelMensagem.setBounds(30, 300, 400, 50);
-        frame.getContentPane().add(labelMensagem);
-
-        buttonOk.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                validarCpfSenha();
-            }
-        });
-
-        buttonCreditar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                creditar();
-            }
-        });
-
-        buttonDebitar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                debitar();
-            }
-        });
-
-        buttonTransferir.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                transferir();
-            }
-        });
-    }
-
-    private void validarCpfSenha() {
-        try {
-            String cpf = textFieldCpf.getText();
-            String senha = textFieldSenha.getText();
-            if (repositorio.localizarCorrentista(cpf) != null) {
-                buttonCreditar.setEnabled(true);
-                buttonDebitar.setEnabled(true);
-                buttonTransferir.setEnabled(true);
-                labelMensagem.setText("Autenticação realizada com sucesso!");
-                labelMensagem.setForeground(Color.GREEN);
-            } else {
-                labelMensagem.setText("CPF ou senha inválidos!");
-                labelMensagem.setForeground(Color.RED);
-            }
-        } catch (Exception e) {
-            labelMensagem.setText("Erro: " + e.getMessage());
-            labelMensagem.setForeground(Color.RED);
-        }
-    }
-
-    private void creditar() {
-        try {
-            String cpf = textFieldCpf.getText();
-            String senha = textFieldSenha.getText();
-            double valor = Double.parseDouble(textFieldValor.getText());
-            int idConta = Integer.parseInt(textFieldIdConta.getText());
-            Fachada.creditarValor(idConta, cpf, senha, valor);
-            labelMensagem.setText("Crédito de R$" + valor + " realizado com sucesso na conta ID " + idConta);
-            labelMensagem.setForeground(Color.GREEN);
-        } catch (Exception e) {
-            labelMensagem.setText("Erro: " + e.getMessage());
-            labelMensagem.setForeground(Color.RED);
-        }
-    }
-
-    private void debitar() {
-        try {
-            String cpf = textFieldCpf.getText();
-            String senha = textFieldSenha.getText();
-            double valor = Double.parseDouble(textFieldValor.getText());
-            int idConta = Integer.parseInt(textFieldIdConta.getText());
-            Fachada.debitarValor(idConta, cpf, senha, valor);
-            labelMensagem.setText("Débito de R$" + valor + " realizado com sucesso na conta ID " + idConta);
-            labelMensagem.setForeground(Color.GREEN);
-        } catch (Exception e) {
-            labelMensagem.setText("Erro: " + e.getMessage());
-            labelMensagem.setForeground(Color.RED);
-        }
-    }
-
-    private void transferir() {
-        try {
-            String cpf = textFieldCpf.getText();
-            String senha = textFieldSenha.getText();
-            double valor = Double.parseDouble(textFieldValor.getText());
-            int idContaOrigem = Integer.parseInt(textFieldIdConta.getText());
-            int idContaDestino = Integer.parseInt(textFieldContaDestino.getText());
-            Fachada.transferirValor(idContaOrigem, cpf, senha, valor, idContaDestino);
-            labelMensagem.setText("Transferência de R$" + valor + " realizada com sucesso da conta ID " + idContaOrigem + " para conta ID " + idContaDestino);
-            labelMensagem.setForeground(Color.GREEN);
-        } catch (Exception e) {
-            labelMensagem.setText("Erro: " + e.getMessage());
-            labelMensagem.setForeground(Color.RED);
-        }
-    }
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	public void initialize() {
+		frame = new JFrame();
+		frame.setBounds(100, 100, 450, 300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		
+		label = new JLabel("BANKO");
+		label.setForeground(new Color(153, 50, 204));
+		label.setFont(new Font("Verdana", Font.BOLD | Font.ITALIC, 13));
+		label.setBackground(Color.GRAY);
+		label.setBounds(52, 10, 85, 20);
+		frame.getContentPane().add(label);
+		
+		label_1 = new JLabel("Digite Sua Senha");
+		label_1.setFont(new Font("Tahoma", Font.BOLD, 12));
+		label_1.setBounds(30, 128, 118, 13);
+		frame.getContentPane().add(label_1);
+		
+		textField = new JTextField();
+		textField.setBounds(30, 151, 96, 19);
+		frame.getContentPane().add(textField);
+		textField.setColumns(10);
+		
+		label_2 = new JLabel("Digite Seu CPF");
+		label_2.setFont(new Font("Tahoma", Font.BOLD, 12));
+		label_2.setBounds(30, 72, 96, 13);
+		frame.getContentPane().add(label_2);
+		
+		textField_1 = new JTextField();
+		textField_1.setBounds(30, 95, 96, 19);
+		frame.getContentPane().add(textField_1);
+		textField_1.setColumns(10);
+		
+		button = new JButton("CREDITAR");
+		button.setEnabled(false);
+		button.setFont(new Font("Tahoma", Font.BOLD, 10));
+		button.setBounds(302, 78, 96, 21);
+		frame.getContentPane().add(button);
+		
+		button_1 = new JButton("DEBITAR");
+		button_1.setEnabled(false);
+		button_1.setFont(new Font("Tahoma", Font.BOLD, 10));
+		button_1.setBounds(302, 116, 96, 21);
+		frame.getContentPane().add(button_1);
+		
+		button_2 = new JButton("TRANSFERIR");
+		button_2.setEnabled(false);
+		button_2.setFont(new Font("Tahoma", Font.BOLD, 10));
+		button_2.setBounds(302, 150, 96, 21);
+		frame.getContentPane().add(button_2);
+		
+		label_3 = new JLabel("CAIXA ");
+		label_3.setForeground(new Color(255, 0, 0));
+		label_3.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 12));
+		label_3.setBounds(10, 15, 45, 13);
+		frame.getContentPane().add(label_3);
+		
+		button_3 = new JButton("OK");
+		button_3.setFont(new Font("Tahoma", Font.BOLD, 13));
+		button_3.setBounds(40, 180, 75, 21);
+		frame.getContentPane().add(button_3);
+	}
 }

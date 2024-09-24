@@ -227,40 +227,6 @@ public class Fachada {
 		}
 		repositorio.salvarObjetos();
 	}
-	
-	public static void transferirValor(int id1, String cpf, String senha, double valor, int id2) throws Exception {
-	    Correntista correntistaOrigem = repositorio.localizarCorrentista(cpf);
-	    if (correntistaOrigem == null) {
-	        throw new Exception("Correntista inexistente.");
-	    }
-
-	    if (!correntistaOrigem.getSenha().equals(senha)) {
-	        throw new Exception("Senha incorreta.");
-	    }
-
-	    Conta contaOrigem = repositorio.localizarConta(id1);
-	    if (contaOrigem == null) {
-	        throw new Exception("Conta de origem não encontrada.");
-	    }
-
-	    if (valor <= 0) {
-	        throw new Exception("Valor de transferência inválido.");
-	    }
-
-	    if (contaOrigem.getSaldo() < valor) {
-	        throw new Exception("Saldo insuficiente para a transferência.");
-	    }
-	    Conta contaDestino = repositorio.localizarConta(id2);
-	    if (contaDestino == null) {
-	        throw new Exception("Conta de destino não encontrada.");
-	    }
-	    contaOrigem.debitar(valor);
-	    contaDestino.creditar(valor);
-	    repositorio.salvarObjetos();
-
-	    System.out.println("Transferência de R$" + valor + " da conta " + id1 + " para a conta " + id2 + " realizada com sucesso.");
-	}
-
 
 	public static void apagarConta(int id) throws Exception {
 		Conta conta = repositorio.localizarConta(id);
