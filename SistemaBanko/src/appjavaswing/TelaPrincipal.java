@@ -20,9 +20,6 @@ public class TelaPrincipal {
 	private JButton button_1;
 	private JButton button_2;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -36,16 +33,11 @@ public class TelaPrincipal {
 		});
 	}
 
-	/**
-	 * Create the application.
-	 */
+
 	public TelaPrincipal() {
 		initialize();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
 		frame = new JFrame();
 		frame.setResizable(false);
@@ -67,6 +59,7 @@ public class TelaPrincipal {
 		frame.getContentPane().add(label_1);
 		
 		button = new JButton("CAIXA");
+		button.setFont(new Font("Tahoma", Font.BOLD, 10));
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TelaCaixa tc = new TelaCaixa();			
@@ -76,6 +69,7 @@ public class TelaPrincipal {
 		frame.getContentPane().add(button);
 		
 		button_1 = new JButton("CONTA");
+		button_1.setFont(new Font("Tahoma", Font.BOLD, 10));
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TelaConta tconta = new TelaConta();
