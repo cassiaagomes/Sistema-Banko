@@ -7,8 +7,8 @@ public class Conta {
 	protected String data;
 	protected double saldo;
 	private ArrayList<Correntista> correntista = new ArrayList<>();
-	
-	public Conta (int id, String data, double saldo) {
+
+	public Conta(int id, String data, double saldo) {
 		this.id = id;
 		this.data = data;
 		this.saldo = saldo;
@@ -38,47 +38,52 @@ public class Conta {
 		return correntista;
 	}
 
-	
-		public void creditar(double valor) {
-			saldo += valor;
-		}
-		            	        
+	public void creditar(double valor) {
+		saldo += valor;
+	}
 
-    	public void debitar(double valor) throws Exception {
-			if (valor <= 0) {
-				throw new Exception("O valor a debitar deve ser positivo.");
+	public void debitar(double valor) throws Exception {
+		if (valor <= 0) {
+			throw new Exception("O valor a debitar deve ser positivo.");
+		}
+
+		if (this instanceof ContaEspecial) {
+			ContaEspecial especial = (ContaEspecial) this;
+			double limiteDisponivel = saldo + especial.getLimite();
+			if (valor > limiteDisponivel) {
+				throw new Exception("Saldo insuficiente, excedendo o limite disponível.");
 			}
-		
-			if(this instanceof ContaEspecial) {
-				ContaEspecial especial = (ContaEspecial) this;
-				double limiteDisponivel = saldo + especial.getLimite();
-				if (valor > limiteDisponivel) {
-					throw new Exception("Saldo insuficiente, excedendo o limite disponível.");
-				}
+		} else {
+			if (saldo < valor) {
+				throw new Exception("Saldo insuficiente.");
+			}
+		}
+
+		saldo -= valor;
+		System.out.println("Foi debitado: " + valor + " da conta.");
+	}
+
+	public void transferir(double valor, Conta destino) throws Exception {
+		if (saldo >= valor) {
+			this.debitar(valor);
+			destino.creditar(valor);
+		} else if (this instanceof ContaEspecial) {
+			ContaEspecial especial = (ContaEspecial) this;
+			double limiteDisponivel = saldo + especial.getLimite();
+			if (valor > limiteDisponivel) {
+				throw new Exception("Saldo insuficiente, excedendo o limite disponível.");
 			} else {
-				if (saldo < valor) {
-					throw new Exception("Saldo insuficiente.");
-				}
+				this.debitar(valor);
+				destino.creditar(valor);
 			}
-		
-			saldo -= valor;
-			System.out.println("Foi debitado: " + valor + " da conta.");
-		}
-		
-
-    	public void transferir(double valor, Conta destino) throws Exception {
-	        if (valor > 0 && saldo >= valor) {
-	            this.debitar(valor);
-	            destino.creditar(valor);
-	        } else {
-	            System.out.println("Saldo Baixo.");
-	        }
+		} else
+			throw new Exception("Saldo Baixo.");
 	}
 
 	public void adicionar(Correntista c) {
 		if (c != null && !correntista.contains(c)) {
-	        correntista.add(c);
-	    }
+			correntista.add(c);
+		}
 	}
 
 }
