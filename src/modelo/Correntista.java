@@ -50,5 +50,11 @@ public class Correntista implements Comparable<Correntista> {
 		return this.cpf.compareTo(outro.getCpf());
 	}
 	
+	@Override
+	public String toString() {
+	    return "Correntista [CPF=" + cpf + ", Nome=" + nome + "]";
+	}
+
+	
 
 }

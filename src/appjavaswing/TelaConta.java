@@ -34,7 +34,7 @@ public class TelaConta {
         frame.getContentPane().add(textArea);
 
         JButton listButton = new JButton("Listar Contas");
-        listButton.setBounds(10, 150, 150, 25);
+        listButton.setBounds(10, 150, 125, 25);
         frame.getContentPane().add(listButton);
 
         listButton.addActionListener(new ActionListener() {
@@ -43,8 +43,8 @@ public class TelaConta {
             }
         });
 
-        JButton criarButton = new JButton("Criar Conta Simples");
-        criarButton.setBounds(170, 150, 150, 25);
+        JButton criarButton = new JButton("Criar Conta");
+        criarButton.setBounds(145, 150, 134, 25);
         frame.getContentPane().add(criarButton);
 
         criarButton.addActionListener(new ActionListener() {
@@ -54,7 +54,7 @@ public class TelaConta {
         });
 
         JButton criarEspecialButton = new JButton("Criar Conta Especial");
-        criarEspecialButton.setBounds(170, 180, 150, 25);
+        criarEspecialButton.setBounds(10, 190, 156, 25);
         frame.getContentPane().add(criarEspecialButton);
 
         criarEspecialButton.addActionListener(new ActionListener() {
@@ -64,7 +64,7 @@ public class TelaConta {
         });
 
         JButton removerButton = new JButton("Apagar Conta");
-        removerButton.setBounds(330, 150, 100, 25);
+        removerButton.setBounds(289, 150, 125, 25);
         frame.getContentPane().add(removerButton);
 
         removerButton.addActionListener(new ActionListener() {
@@ -80,9 +80,9 @@ public class TelaConta {
         for (Conta c : contas) {
             if (c instanceof ContaEspecial) {
                 ContaEspecial ce = (ContaEspecial) c;
-                textArea.append("ID: " + ce.getId() + " - Especial - Saldo: " + ce.getSaldo() + " - Limite: " + ce.getLimite() + "\n");
+                textArea.append("ID: " + ce.getId() + "- Data: "+ ce.getData()+" - Especial - Saldo: " + ce.getSaldo() + " - Limite: " + ce.getLimite() + "\n");
             } else {
-                textArea.append("ID: " + c.getId() + " - Simples - Saldo: " + c.getSaldo() + "\n");
+                textArea.append("ID: " + c.getId() +  "- Data: "+ c.getData()+" - Simples - Saldo: " + c.getSaldo() + "\n");
             }
         }
     }
