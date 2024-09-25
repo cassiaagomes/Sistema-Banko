@@ -33,12 +33,12 @@ public class TestarExcecao {
 		}catch (Exception e) {System.out.println("4ok--->"+e.getMessage());}
 
 		try {
-			Fachada.removerCorrentistaConta(3,"0003"); //cpf,nome,senha
+			Fachada.removerCorrentistaConta(3,"0003"); //cpf,senha
 			System.out.println("*************5--->Nao lan�ou exce��o para: remover correntista titular "); 
 		}catch (Exception e) {System.out.println("5ok--->"+e.getMessage());}
 
 		try {
-			Fachada.apagarConta(3); //cpf,nome,senha
+			Fachada.apagarConta(4); //cpf,nome,senha
 			System.out.println("*************6--->Nao lan�ou exce��o para: apagar conta com saldo nao zerado "); 
 		}catch (Exception e) {System.out.println("6ok--->"+e.getMessage());}
 

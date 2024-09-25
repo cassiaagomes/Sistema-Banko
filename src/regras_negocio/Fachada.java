@@ -207,7 +207,7 @@ public class Fachada {
 	    boolean remover = correntistas.removeIf(c -> c.getCpf().equals(cpf));
 
 	    if (!remover) {
-	        throw new Exception("Cotitular não encontrado na conta.");
+	        throw new Exception("Correntista não encontrado na conta.");
 	    }
 	    for (Correntista c : correntistas) {
 	        ArrayList<Conta> contasCorrentistas = c.getContas();
