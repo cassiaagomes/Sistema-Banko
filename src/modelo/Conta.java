@@ -2,7 +2,7 @@ package modelo;
 
 import java.util.ArrayList;
 
-public class Conta {
+public class Conta  {
 	protected int id;
 	protected String data;
 	protected double saldo;

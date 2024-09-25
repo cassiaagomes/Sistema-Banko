@@ -13,6 +13,10 @@ import modelo.Correntista;
 public class Repositorio {
     private List<Correntista> correntistas = new ArrayList<>();
     private List<Conta> contas = new ArrayList<>();
+    
+    public Repositorio() {
+		carregarObjetos();
+	}
 
     public void adicionarCorrentista(Correntista correntista) {
         correntistas.add(correntista);
@@ -67,6 +71,7 @@ public class Repositorio {
 
     public void carregarObjetos() {
         try {
+        	
             File f1 = new File(new File(".\\contas.csv").getCanonicalPath());
             File f2 = new File(new File(".\\correntistas.csv").getCanonicalPath());
             if (!f1.exists() || !f2.exists()) {
@@ -80,8 +85,10 @@ public class Repositorio {
             throw new RuntimeException("Criação dos arquivos vazios: " + ex.getMessage());
         }
 
-        // Carregar Contas
+        correntistas.clear();
+        contas.clear();
         try {
+        	
             String linha;
             String[] partes;
             Conta co;
@@ -138,7 +145,7 @@ public class Repositorio {
                 String cpf = partes[0];
                 String nome = partes[1];
                 String senha = partes[2];
-                String ids = partes.length >= 4 ? partes[3] : ""; // Verifica se ids existem
+                String ids = partes.length >= 4 ? partes[3] : ""; 
 
                 c = new Correntista(cpf, nome, senha);
                 this.adicionarCorrentista(c);

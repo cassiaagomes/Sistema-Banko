@@ -1,7 +1,10 @@
 package regras_negocio;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+
 import modelo.Conta;
 import modelo.ContaEspecial;
 import modelo.Correntista;
@@ -63,8 +66,10 @@ public class Fachada {
 		if (c.getContas().isEmpty()) {
 
 			int idConta = repositorio.gerarIdConta();
-			String dataAtual = java.time.LocalDateTime.now().toString();
-			Conta novaConta = new Conta(idConta, dataAtual, 0.0);
+			DateTimeFormatter f1 = DateTimeFormatter.ofPattern("dd/MM/yy");
+			LocalDate dataatual = LocalDate.now();
+			String data = dataatual.format(f1);
+			Conta novaConta = new Conta(idConta, data, 0.0);
 			c.getContas().add(novaConta);
 			novaConta.adicionar(c);
 
@@ -79,8 +84,11 @@ public class Fachada {
 				}
 			}
 			int idConta = repositorio.gerarIdConta();
-			String dataAtual = java.time.LocalDateTime.now().toString();
-			Conta novaConta = new Conta(idConta, dataAtual, 0.0);
+			DateTimeFormatter f1 = DateTimeFormatter.ofPattern("dd/MM/yy");
+			LocalDate dataatual = LocalDate.now();
+			String data = dataatual.format(f1);
+		
+			Conta novaConta = new Conta(idConta, data, 0.0);
 			c.getContas().add(novaConta);
 			repositorio.adicionarConta(novaConta);
 			repositorio.salvarObjetos();
@@ -100,9 +108,11 @@ public class Fachada {
 
 		int idConta = repositorio.gerarIdConta();
 
-		String dataAtual = java.time.LocalDateTime.now().toString();
+		DateTimeFormatter f1 = DateTimeFormatter.ofPattern("dd/MM/yy");
+		LocalDate dataatual = LocalDate.now();
+		String data = dataatual.format(f1);
 
-		ContaEspecial contaEspecial = new ContaEspecial(idConta, dataAtual, 0.0, limite);
+		ContaEspecial contaEspecial = new ContaEspecial(idConta, data, 0.0, limite);
 
 		c.getContas().add(contaEspecial);
 		repositorio.adicionarConta(contaEspecial);
@@ -110,8 +120,7 @@ public class Fachada {
 
 	}
 
-	public static void creditarValor(int id, String cpf, String senha, double valor) {
-		try {
+	public static void creditarValor(int id, String cpf, String senha, double valor) throws Exception {
 			Correntista correntista = repositorio.localizarCorrentista(cpf);
 			if (correntista == null) {
 				throw new Exception("Correntista inexistente.");
@@ -127,10 +136,7 @@ public class Fachada {
 				throw new Exception("Senha incorreta.");
 			} else
 				conta.creditar(valor);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-		repositorio.salvarObjetos();
+			repositorio.salvarObjetos();
 	}
 
 	public static void debitarValor(int id, String cpf, String senha, double valor) throws Exception {
@@ -272,8 +278,8 @@ public class Fachada {
 		System.out.println("Conta apagada com sucesso.");
 	}
 
-	public static void transferirValor(int id1, String cpf, String senha, double valor, int id2) {
-		try {
+	public static void transferirValor(int id1, String cpf, String senha, double valor, int id2) throws Exception {
+
 			Correntista correntista = repositorio.localizarCorrentista(cpf);
 			if (correntista == null) {
 				throw new Exception("O CPF informado não pertence a nehum correntista");
@@ -297,17 +303,16 @@ public class Fachada {
 			for (Conta ct : correntista.getContas()) {
 				if (ct.getId() == conta1.getId()) {
 					conta1.transferir(valor, conta2);
+					repositorio.salvarObjetos();
 					deu_certo = true;
 					break;
 				}
 			}
 			if (deu_certo == false)
 				throw new Exception("Você não está relacionado a esta conta. Operação abortada.");
-		} catch (Exception f) {
-			System.out.println(f.getMessage());
-		}
 	}
 
+	
 	public static Repositorio getRepositorio() {
 		return repositorio;
 	}
